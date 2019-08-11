@@ -2,14 +2,14 @@ package pl.sda.List;
 
 import java.util.Arrays;
 
-public class ArrayList2x implements IList {
+public class ArrayList implements IList {
 
     private long[] holder;
     private int size = 0;
-    private final int arraySizeMultipler = 2;
 
-    public ArrayList2x() {
-        holder = new long[arraySizeMultipler];
+
+    public ArrayList() {
+        holder = new long[1];
     }
 
     @Override
@@ -31,13 +31,11 @@ public class ArrayList2x implements IList {
         return holder[index];
     }
 
-
     @Override
     public void set(int index, long value) {
         checkBounds(index);
         holder[index] = value;
     }
-
 
     @Override
     public void remove(int index) {
@@ -59,11 +57,11 @@ public class ArrayList2x implements IList {
         return -1;
     }
 
-    //to do - increment size of table
-    @Override            //   0             2           size= 1
+
+    @Override
     public void add(int index, long value) {
         if (size == holder.length - 1) {
-            long[] holderTmp = new long[holder.length * 2];
+            long[] holderTmp = new long[holder.length +1];
             for (int i = 0; i < holder.length; i++) {
                 holderTmp[i] = holder[i];
             }
@@ -76,11 +74,11 @@ public class ArrayList2x implements IList {
         size++;
     }
 
-    //to do - increment size of physical table
+
     @Override
     public void add(long value) {
         if (size == holder.length - 1) {
-            long[] holderTmp = new long[holder.length * 2];
+            long[] holderTmp = new long[holder.length +1];
             for (int i = 0; i < holder.length; i++) {
                 holderTmp[i] = holder[i];
             }

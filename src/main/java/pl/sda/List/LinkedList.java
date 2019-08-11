@@ -5,10 +5,12 @@ public class LinkedList implements IList {
     Node last;
     int size = 0;
 
-    //to do
+
     @Override
     public boolean isEmpty() {
-        return false;
+        if (size > 0)
+            return false;
+        return true;
     }
 
     @Override
@@ -27,16 +29,37 @@ public class LinkedList implements IList {
         return tmp.getValue();
     }
 
-    //to do
     @Override
     public void set(int index, long value) {
+        checkInsertBounds(index);
+        Node tmp = first;
 
+        for (int i = 0; i < index; i++) {
+            tmp = tmp.getNext();
+        }
+        tmp.setValue(value);
     }
 
-    //to do
     @Override
     public void remove(int index) {
-
+        checkInsertBounds(index);
+        Node tmp = first;
+        for (int i = 0; i < index; i++) {
+            tmp = tmp.getNext();
+        }
+        if (index == 0) {
+            first = tmp.getNext();
+            first.setPrev(null);
+            tmp.setNext(null);
+        } else if (index == size - 1) {
+            last = tmp.getPrev();
+            last.setNext(null);
+            tmp.setPrev(null);
+        } else {
+            tmp.getNext().setPrev(tmp.getPrev());
+            tmp.getPrev().setNext(tmp.getNext());
+        }
+        size--;
     }
 
     @Override
@@ -86,6 +109,7 @@ public class LinkedList implements IList {
         Node newNode = new Node(value);
 
         Node beforeReplaced = replaced.getPrev();
+
         //No node before replaced this means that replaced was first node!
         //Now 'first' must point to the newNode we inserted
         if (beforeReplaced == null) {
@@ -114,14 +138,14 @@ public class LinkedList implements IList {
 
     //When retrieving value last element is at index size -1
     private void checkBounds(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException(index);
         }
     }
 
     //when inserting value you can add it between other or exactly at the end which is index = size
     private void checkInsertBounds(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(index);
         }
     }

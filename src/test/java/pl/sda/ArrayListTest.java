@@ -1,14 +1,15 @@
 package pl.sda;
 
 import org.junit.Test;
+import pl.sda.List.ArrayList;
+
 import pl.sda.List.IList;
-import pl.sda.List.LinkedList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LinkedListTest {
+public class ArrayListTest {
 
-    private final IList list = new LinkedList();
+    private final IList list = new ArrayList();
 
     @Test
     public void emptyTableShouldHaveSize_0() {
@@ -22,7 +23,7 @@ public class LinkedListTest {
     @Test
     public void tableWithOneElementShouldHaveSize1() {
         //when
-        list.add(0, 5);
+       list.add(0, 5);
         long size = list.size();
 
         //then
@@ -129,7 +130,6 @@ public class LinkedListTest {
         list.set(2, 9);
 
         //then
-        list.getHolderView();
         assertThat(list.getHolderView()[2]).isEqualTo(9);
     }
 
