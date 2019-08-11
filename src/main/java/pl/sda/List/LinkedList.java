@@ -1,6 +1,6 @@
 package pl.sda.List;
 
-public class LinkedList implements IList {
+public class LinkedList<T> implements IList<T> {
     Node first;
     Node last;
     int size = 0;
@@ -19,18 +19,18 @@ public class LinkedList implements IList {
     }
 
     @Override
-    public long get(int index) {
+    public T get(int index) {
         checkBounds(index);
 
         Node tmp = first;
         for (int i = 0; i < index; i++) {
             tmp = tmp.getNext();
         }
-        return tmp.getValue();
+        return (T) tmp.getValue();
     }
 
     @Override
-    public void set(int index, long value) {
+    public void set(int index, T value) {
         checkInsertBounds(index);
         Node tmp = first;
 
@@ -63,11 +63,11 @@ public class LinkedList implements IList {
     }
 
     @Override
-    public int firstIndexWith(long value) {
+    public int firstIndexWith(T value) {
         int index = 0;
         Node tmp = first;
         while (tmp != null) {
-            if (tmp.getValue() == value) {
+            if (tmp.getValue().equals(value)) {
                 return index;
             }
             index++;
@@ -77,7 +77,7 @@ public class LinkedList implements IList {
     }
 
     @Override
-    public void add(long value) {
+    public void add(T value) {
         if (size == 0) {
             last = first = new Node(value);
         } else {
@@ -90,7 +90,7 @@ public class LinkedList implements IList {
     }
 
     @Override
-    public void add(int index, long value) {
+    public void add(int index, T value) {
         checkInsertBounds(index);
         if (size == 0 || index == size) {
             add(value);
@@ -105,7 +105,7 @@ public class LinkedList implements IList {
         insertBetween(tmpPrev, value);
     }
 
-    private void insertBetween(Node replaced, long value) {
+    private void insertBetween(Node replaced, T value) {
         Node newNode = new Node(value);
 
         Node beforeReplaced = replaced.getPrev();
@@ -124,13 +124,15 @@ public class LinkedList implements IList {
         size++;
     }
 
+    @SuppressWarnings("Uncheck")
     @Override
-    public long[] getHolderView() {
-        long[] longs = new long[size];
+    public T[] getHolderView() {
+
+        T[] longs = (T[]) new Object[size];
         int index = 0;
         Node tmp = first;
         while (tmp != null) {
-            longs[index++] = tmp.getValue();
+            longs[index++] = (T) tmp.getValue();
             tmp = tmp.getNext();
         }
         return longs;

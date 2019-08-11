@@ -2,14 +2,14 @@ package pl.sda.List;
 
 import java.util.Arrays;
 
-public class ArrayList implements IList {
+public class ArrayList <T> implements IList<T> {
 
-    private long[] holder;
+    private T[] holder;
     private int size = 0;
 
 
     public ArrayList() {
-        holder = new long[1];
+        holder =  (T[]) new Object[1];
     }
 
     @Override
@@ -26,13 +26,13 @@ public class ArrayList implements IList {
     }
 
     @Override
-    public long get(int index) {
+    public T get(int index) {
         checkBounds(index);
         return holder[index];
     }
 
     @Override
-    public void set(int index, long value) {
+    public void set(int index, T value) {
         checkBounds(index);
         holder[index] = value;
     }
@@ -43,25 +43,24 @@ public class ArrayList implements IList {
         for (int i = index; i < size - 1; i++) {
             holder[i] = holder[i + 1];
         }
-        holder[size - 1] = 0;
+        holder[size - 1] = null;
         size--;
     }
 
     @Override
-    public int firstIndexWith(long value) {
+    public int firstIndexWith(T value) {
         for (int i = 0; i < size; i++) {
-            if (value == holder[i]) {
+            if (holder[i].equals(value)) {
                 return i;
             }
         }
         return -1;
     }
 
-
     @Override
-    public void add(int index, long value) {
+    public void add(int index, T value) {
         if (size == holder.length - 1) {
-            long[] holderTmp = new long[holder.length +1];
+            T[] holderTmp =  (T[]) new Object[holder.length +1];
             for (int i = 0; i < holder.length; i++) {
                 holderTmp[i] = holder[i];
             }
@@ -74,11 +73,10 @@ public class ArrayList implements IList {
         size++;
     }
 
-
     @Override
-    public void add(long value) {
+    public void add(T value) {
         if (size == holder.length - 1) {
-            long[] holderTmp = new long[holder.length +1];
+            T[] holderTmp =  (T[]) new Object[holder.length +1];
             for (int i = 0; i < holder.length; i++) {
                 holderTmp[i] = holder[i];
             }
@@ -90,8 +88,8 @@ public class ArrayList implements IList {
 
     @Override
     //TODO - This should return copy of the filled part of the array
-    public long[] getHolderView() {
-        return Arrays.copyOfRange(holder, 0, size);
+    public T[] getHolderView() {
+        return  Arrays.copyOfRange(holder, 0, size);
 
     }
 
