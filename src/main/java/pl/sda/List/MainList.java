@@ -13,10 +13,10 @@ public class MainList {
 
         System.out.println(list.get(2));
 
-       Long[]tab= list.getHolderView();
+       Object[]tab= list.getHolderView();
 
-        for (Long val : tab)
-            System.out.print( val+ " ");
+        for (int i = 0; i < tab.length; ++i)
+        System.out.print(tab[i] + " ");
 
   //      System.out.println(list.size());
         System.out.println();

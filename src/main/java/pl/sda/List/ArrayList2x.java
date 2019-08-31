@@ -99,14 +99,14 @@ public class ArrayList2x<T> implements IList<T> {
 
     //When retrieving value last element is at index size -1
     private void checkBounds(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(index);
         }
     }
 
     //when inserting value you can add it between other or exactly at the end which is index = size
     private void checkInsertBounds(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException(index);
         }
     }

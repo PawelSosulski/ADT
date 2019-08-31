@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ArrayList2xTest {
 
-    private final IList<Long> list = new ArrayList2x<>();
+    private final IList list = new ArrayList2x();
 
     @Test
     public void emptyTableShouldHaveSize_0() {
@@ -22,7 +22,7 @@ public class ArrayList2xTest {
     @Test
     public void tableWithOneElementShouldHaveSize1() {
         //when
-       list.add(0, 5L);
+       list.add(0, 5);
         long size = list.size();
 
         //then
@@ -32,12 +32,12 @@ public class ArrayList2xTest {
     @Test
     public void shouldInsertValuesCorrectly() {
         //when
-        list.add(0, 1L);
-        list.add(0, 2L);
-        list.add(0, 3L);
+        list.add(0, 1);
+        list.add(0, 2);
+        list.add(0, 3);
 
         //then
-        assertThat(list.getHolderView()).containsExactly(3L, 2L, 1L);
+        assertThat(list.getHolderView()).containsExactly(3, 2, 1);
 
     }
 
@@ -109,7 +109,7 @@ public class ArrayList2xTest {
 
     @Test
     public void shouldReturnFalseIfListIsNotEmpty() {
-        list.add(6L);
+        list.add(6);
         assertThat(list.isEmpty()).isEqualTo(false);
     }
 
@@ -119,7 +119,7 @@ public class ArrayList2xTest {
         initializeHolderWith_3_4_5_2_1();
 
         //then
-        assertThat(list.get(2)).isEqualTo(5);
+        assertThat(list.get(2)).isEqualTo(5L);
     }
 
     @Test
@@ -149,7 +149,68 @@ public class ArrayList2xTest {
         list.remove(2);
 
         //then
-        assertThat(list.firstIndexWith(5L)).isEqualTo(-1);
+        assertThat(list.firstIndexWith(5)).isEqualTo(-1);
+    }
+
+    @Test
+    public void lastElementShouldGetValuePropoerly() {
+        //given
+        initializeHolderWith_3_4_5_2_1();
+
+        //then
+        assertThat(list.get(4)).isEqualTo(1L);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void shouldThrowExceptionWhenRemoveLastAndGetRemovedIndex() {
+        //given
+        initializeHolderWith_3_4_5_2_1();
+        list.remove(4);
+
+        list.get(4);
+    }
+
+    @Test
+    public void lastElementShouldGetValuePropoerlyAfterRemoveEarlierLast() {
+        //given
+        initializeHolderWith_3_4_5_2_1();
+
+        list.remove(4);
+
+        assertThat(list.get(3)).isEqualTo(2L);
+    }
+
+    @Test
+    public void firstElementShouldGetValuePropoerly() {
+        //given
+        initializeHolderWith_3_4_5_2_1();
+
+        //then
+        assertThat(list.get(0)).isEqualTo(3L);
+    }
+
+    @Test
+    public void firstElementShouldGetValuePropoerlyAfterRemoveEarlierFirst() {
+        //given
+        initializeHolderWith_3_4_5_2_1();
+
+        list.remove(0);
+
+        assertThat(list.get(0)).isEqualTo(4L);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void shouldThrowExceptionWhenSetOutOfBoundIndex() {
+        //given
+        initializeHolderWith_3_4_5_2_1();
+        list.set(5, 2);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void shouldThrowExceptionWhenGetOutOfBoundIndex() {
+        //given
+        initializeHolderWith_3_4_5_2_1();
+        list.get(5);
     }
 
     private void initializeHolderWith_3_4_5_2_1() {

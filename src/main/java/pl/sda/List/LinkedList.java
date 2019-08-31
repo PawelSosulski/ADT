@@ -31,7 +31,7 @@ public class LinkedList<T> implements IList<T> {
 
     @Override
     public void set(int index, T value) {
-        checkInsertBounds(index);
+        checkBounds(index);
         Node tmp = first;
 
         for (int i = 0; i < index; i++) {
@@ -128,26 +128,26 @@ public class LinkedList<T> implements IList<T> {
     @Override
     public T[] getHolderView() {
 
-        T[] longs = (T[]) new Object[size];
+        T[] tab = (T[]) new Object[size];
         int index = 0;
         Node tmp = first;
         while (tmp != null) {
-            longs[index++] = (T) tmp.getValue();
+            tab[index++] = (T) tmp.getValue();
             tmp = tmp.getNext();
         }
-        return longs;
+        return tab;
     }
 
     //When retrieving value last element is at index size -1
     private void checkBounds(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(index);
         }
     }
 
     //when inserting value you can add it between other or exactly at the end which is index = size
     private void checkInsertBounds(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException(index);
         }
     }
